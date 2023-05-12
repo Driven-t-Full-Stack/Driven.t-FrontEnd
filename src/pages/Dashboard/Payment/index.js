@@ -3,6 +3,7 @@ import PaymentArea from '../../../components/Dashboard/Payment';
 import NotSubscribedMsg from '../../../components/Dashboard/Payment/NotSubscribedMsg';
 
 import useEnrollment from '../../../hooks/api/useEnrollment';
+import TicketModality from '../../../components/Dashboard/Payment/TicketSelect';
 
 export default function Payment() {
   const { enrollment } = useEnrollment();
@@ -17,7 +18,7 @@ export default function Payment() {
     <TransactionAreaContainer>
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
 
-      <PaymentArea />
+      <TicketModality />
     </TransactionAreaContainer>
   );
 }
