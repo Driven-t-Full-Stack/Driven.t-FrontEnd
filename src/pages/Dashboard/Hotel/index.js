@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 import HotelArea from '../../../components/Dashboard/Hotel';
+import HotelNotAllowed from '../../../components/Dashboard/Hotel/hotelNotAllowed';
+import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
 
 export default function Hotel() {
+  const { ticket } = getTicketWithHotel();
+  console.log(ticket);
+  if (!ticket) return (
+    <HotelNotAllowed></HotelNotAllowed>
+  );
+
   return (
     <HotelAreaContainer>
       <Title>Escolha de hotel e quarto</Title>
