@@ -6,8 +6,12 @@ import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
 export default function Hotel() {
   const { ticket } = getTicketWithHotel();
   console.log(ticket);
-  if (!ticket) return (
-    <HotelNotAllowed></HotelNotAllowed>
+  if (!ticket || ticket.status !== 'PAID') return (
+    <HotelAreaContainer>
+      <Title>Escolha de hotel e quarto</Title>
+
+      <HotelNotAllowed error="No paid ticket"></HotelNotAllowed>
+    </HotelAreaContainer>
   );
 
   return (
@@ -22,6 +26,7 @@ export default function Hotel() {
 const HotelAreaContainer = styled.div`
   width: 100%;
   height: 100%;
+  
 `;
 
 const Title = styled.h1`
