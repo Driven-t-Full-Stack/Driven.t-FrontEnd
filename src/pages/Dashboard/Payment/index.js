@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import PaymentArea from '../../../components/Dashboard/Payment';
 import NotSubscribedMsg from '../../../components/Dashboard/Payment/NotSubscribedMsg';
-
 import useEnrollment from '../../../hooks/api/useEnrollment';
+import TicketModality from '../../../components/Dashboard/Payment/TicketSelect';
 
 export default function Payment() {
-  const { enrollment } = useEnrollment();
-
+  const { enrollment } = useEnrollment();  
+  
   if (!enrollment) {
     return(
       <NotSubscribedMsg />
@@ -17,7 +17,7 @@ export default function Payment() {
     <TransactionAreaContainer>
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
 
-      <PaymentArea />
+      <TicketModality />
     </TransactionAreaContainer>
   );
 }
