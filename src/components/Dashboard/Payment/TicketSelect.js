@@ -1,6 +1,23 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import getOnlineTicket from '../../../hooks/api/getOnlineTicket';
+import getTicketWithOutHotel from '../../../hooks/api/getTicketWithOutHotel';
+import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
 
 export default function TicketModality() {
+  const [onlinePrice, setOnlinePrice] = useState(undefined);
+  const [onsiteNoHotelPrice, setOnsiteNoHotelPrice] = useState(undefined);
+  const { onlineTicket }  = getOnlineTicket();
+  const { onsiteTicketNoHotel }  = getTicketWithOutHotel();
+  const { onsiteTicketHotel }  = getTicketWithHotel();
+  
+  useEffect(() => {
+    if (onlineTicket && onsiteTicketNoHotel) {    
+      setOnlinePrice(onlineTicket.price);
+      setOnsiteNoHotelPrice(onsiteTicketNoHotel.price);
+    }    
+  }, [onlineTicket, onsiteTicketNoHotel]);  
+  
   return (
     <>
       <TicketTitle>
@@ -12,7 +29,7 @@ export default function TicketModality() {
         <Summary>
           <p>
             Presencial 
-            <br /> <span>R$ 250,00</span>
+            <br /> <span>R$ {onsiteNoHotelPrice}</span>
           </p>
 
         </Summary>
@@ -20,7 +37,7 @@ export default function TicketModality() {
         <Summary>
           <p>
             Online 
-            <br /> <span>R$ 100,00</span>
+            <br /> <span>R$ {onlinePrice}</span>
           </p>
 
         </Summary>
