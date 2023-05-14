@@ -1,7 +1,18 @@
 import styled from 'styled-components';
 import PaymentArea from '../../../components/Dashboard/Payment';
+import NotSubscribedMsg from '../../../components/Dashboard/Payment/NotSubscribedMsg';
+
+import useEnrollment from '../../../hooks/api/useEnrollment';
 
 export default function Payment() {
+  const { enrollment } = useEnrollment();
+
+  if (!enrollment) {
+    return(
+      <NotSubscribedMsg />
+    );
+  }
+
   return (
     <TransactionAreaContainer>
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
