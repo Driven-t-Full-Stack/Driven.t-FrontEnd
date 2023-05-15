@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function Payment() {
   const { enrollment } = useEnrollment();
-  // const [passaPagina, setpassaPagina] = useState(false)
+  const [jumpPage, setJumpPage] = useState(true);
 
   if (!enrollment) {
     return <NotSubscribedMsg />;
@@ -17,9 +17,7 @@ export default function Payment() {
     <TransactionAreaContainer>
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
 
-      {/* <TicketModality /> */}
-      <PaymentArea />
-      {/* { passaPagina ?  <TicketModality /> : <PaymentArea /> } */}
+      {jumpPage ? <TicketModality setJumpPage={setJumpPage} /> : <PaymentArea />}
     </TransactionAreaContainer>
   );
 }
