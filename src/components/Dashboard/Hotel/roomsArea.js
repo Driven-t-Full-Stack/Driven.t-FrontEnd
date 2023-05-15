@@ -17,7 +17,9 @@ export default function Rooms() {
           <img src={personPink} alt="person" />
         </People>
       </Room>
+      
     </RoomsArea>
+    <Accommodation><p>RESERVAR QUARTO</p></Accommodation>
   </>;
 }
 
@@ -66,4 +68,24 @@ img{
 const People = styled.div`
 display: flex;
 flex-direction: row-reverse;
+`;
+
+const Accommodation = styled.button`
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+width: 182px;
+height: 37px;
+background: #E0E0E0;
+box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+p{
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
+color: #000000;
+}
 `;
