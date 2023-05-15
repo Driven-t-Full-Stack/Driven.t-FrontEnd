@@ -1,28 +1,36 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled from'styled-components';
 import Hotel from '../../../pages/Dashboard/Hotel';
 import ChangeRoom from './changeRoom';
-import getHotels from '../../../hooks/api/getHotels';
+import hotelApi from '../../../pages/';
+import useAsync from '../../../hooks/useAsync';
+import useToken from '../../../hooks/useAsync';
 
-export default function HotelsArea() {
-  const [hotels, setHotels] = useState([]);
-  let res = getHotels();
+export default function HotelsArea(props) {
+  const [hotelsData, setHotelsData] = useState([]);
+  const token = useToken();
+
+  const {
+    data: hotels,
+    loading: hotelsLoading,
+    error: hotelsError,
+    run: getHotels
+  } = useAsync(() => hotelApi.getHotels(token), []);
+
   useEffect(() => {
-    if (res) {
-      setHotels(res.hotels);
-      console.log(hotels);
+    if (hotels) {
+      setHotelsData(hotels);
     }
-    console.log(res);
-    console.log(hotels);
-  }, [res]);
-  res = getHotels();
+  }, [hotels]);
+
   return (
     <>
       <HotelSummary>
         <Title>Primeiro, escolha seu hotel</Title>
-
         <Summary>
-          
+          {hotelsData.map((hotel) => (
+            <Hotel key={hotel.id} hotel={hotel} />
+          ))}
         </Summary>
       </HotelSummary>
       <ChangeRoom></ChangeRoom>
@@ -30,6 +38,7 @@ export default function HotelsArea() {
   );
 }
 
+//
 const HotelSummary = styled.div`
 width: 100%;
 height: 100%;
