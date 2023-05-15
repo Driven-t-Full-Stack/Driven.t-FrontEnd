@@ -6,7 +6,7 @@ import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
 import useEnrollment from '../../../hooks/api/useEnrollment';
 import axios from 'axios';
 
-export default function TicketModality() {
+export default function TicketModality(props) {
   const [onlinePrice, setOnlinePrice] = useState(undefined);
   const [onsiteNoHotelPrice, setOnsiteNoHotelPrice] = useState(undefined);
   const [onsiteHotelPrice, setOnsiteHotelPrice] = useState(undefined);
@@ -74,6 +74,7 @@ export default function TicketModality() {
     e.preventDefault();
     try {
       const res = await axios.post(process.env.REACT_APP_API_BASE_URL + 'tickets', { ticketTypeId: onlinePriceId });
+      props.setJumpPage(false);
       alert('Reserva concluída com sucesso');
     } catch (error) {
       alert(error);
@@ -92,7 +93,7 @@ export default function TicketModality() {
           ticketTypeId: onsiteHotelPriceId,
         });
       }
-
+      props.setJumpPage(false);
       alert('Reserva concluída com sucesso');
     } catch (error) {
       alert(error);

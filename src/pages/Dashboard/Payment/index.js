@@ -3,9 +3,11 @@ import PaymentArea from '../../../components/Dashboard/Payment';
 import NotSubscribedMsg from '../../../components/Dashboard/Payment/NotSubscribedMsg';
 import useEnrollment from '../../../hooks/api/useEnrollment';
 import TicketModality from '../../../components/Dashboard/Payment/TicketSelect';
+import { useState } from 'react';
 
 export default function Payment() {
   const { enrollment } = useEnrollment();
+  const [jumpPage, setJumpPage] = useState(true);
 
   if (!enrollment) {
     return <NotSubscribedMsg />;
@@ -15,8 +17,7 @@ export default function Payment() {
     <TransactionAreaContainer>
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
 
-      <TicketModality />
-      {/* <PaymentArea /> */}
+      {jumpPage ? <TicketModality setJumpPage={setJumpPage} /> : <PaymentArea />}
     </TransactionAreaContainer>
   );
 }
