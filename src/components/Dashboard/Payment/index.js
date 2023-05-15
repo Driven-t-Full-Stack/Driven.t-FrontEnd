@@ -6,20 +6,21 @@ import Summary from './Summary';
 
 export default function PaymentArea() {
   const [isPaid, setIsPaid] = useState(false);
+  const [summaryTicketId, setSummaryTicketId] = useState(undefined);
 
   return (
     <>
       <TicketSummary>
         <Title>Ingresso escolhido</Title>
 
-        <Summary />
+        <Summary setSummaryTicketId={setSummaryTicketId} />
       </TicketSummary>
 
       <Payment>
         <Title>Pagamento</Title>
       </Payment>
 
-      {isPaid ? <SuccessfulMessage /> : <CreditCardData setIsPaid={setIsPaid} />}
+      {isPaid ? <SuccessfulMessage /> : <CreditCardData setIsPaid={setIsPaid} summaryTicketId={summaryTicketId} />}
     </>
   );
 }

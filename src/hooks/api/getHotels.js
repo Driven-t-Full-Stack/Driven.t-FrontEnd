@@ -13,6 +13,7 @@ export default function getHotels() {
     act: getHotels
   } = useAsync(() => hotelApi.getHotels(token));
   
+  console.log(hotels);
   return {
     hotels,
     hotelsLoading,

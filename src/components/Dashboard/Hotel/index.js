@@ -5,17 +5,16 @@ import ChangeRoom from './changeRoom';
 import getHotels from '../../../hooks/api/getHotels';
 
 export default function HotelsArea() {
-  const [hotels, setHotels] = useState([]);
-  let res = getHotels();
+  const [hotelsData, setHotelsData] = useState([]);
+  const { hotels } = getHotels();
+  
   useEffect(() => {
-    if (res) {
-      setHotels(res.hotels);
-      console.log(hotels);
+    if (hotels) {
+      setHotelsData([...hotelsData, hotels]);
     }
-    console.log(res);
     console.log(hotels);
-  }, [res]);
-  res = getHotels();
+  }, [hotels]);
+
   return (
     <>
       <HotelSummary>

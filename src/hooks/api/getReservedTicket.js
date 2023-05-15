@@ -1,6 +1,6 @@
-import useAsync from '../hooks/useAsync';
-import useToken from '../hooks/useToken';
-import * as ticketApi from './ticketApi';
+import useAsync from '../useAsync';
+import useToken from '../useToken';
+import * as ticketApi from '../../services/ticketApi';
 
 export default function getReservedTicket() {
   const token = useToken();
