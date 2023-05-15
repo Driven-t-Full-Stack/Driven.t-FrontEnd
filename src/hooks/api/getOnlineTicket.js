@@ -5,18 +5,18 @@ import * as ticketApi from '../../services/ticketApi';
 
 export default function getOnlineTicket() {
   const token = useToken();
-  
+
   const {
     data: onlineTicket,
     loading: ticketLoading,
     error: ticketError,
-    act: getTicket
+    act: getTicket,
   } = useAsync(() => ticketApi.getOnlineTicketInfo(token));
-  
+
   return {
     onlineTicket,
     ticketLoading,
     ticketError,
-    getTicket
+    getTicket,
   };
 }
