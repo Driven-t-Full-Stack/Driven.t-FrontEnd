@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import SuccessfulMessage from './SuccessfulMessage';
+import CreditCardData from './CreditCard';
 
 export default function PaymentArea() {
+  const [isPaid, setIsPaid] = useState(false);
+
   return (
     <>
       <TicketSummary>
@@ -17,6 +22,8 @@ export default function PaymentArea() {
       <Payment>
         <Title>Pagamento</Title>
       </Payment>
+
+      {isPaid ? <SuccessfulMessage /> : <CreditCardData setIsPaid={setIsPaid} />}
     </>
   );
 }
