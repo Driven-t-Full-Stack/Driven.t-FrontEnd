@@ -1,31 +1,29 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Rooms from './roomsArea';
+import Hotel from '../../../pages/Dashboard/Hotel';
 import ChangeRoom from './changeRoom';
-import resort from '../../../assets/images/resort.png';
 import getHotels from '../../../hooks/api/getHotels';
 
-export default function HotelArea() {
-  const { hotels } = getHotels();
-  console.log(hotels);
-
+export default function HotelsArea() {
+  const [hotels, setHotels] = useState([]);
+  let res = getHotels();
+  useEffect(() => {
+    if (res) {
+      setHotels(res.hotels);
+      console.log(hotels);
+    }
+    console.log(res);
+    console.log(hotels);
+  }, [res]);
+  res = getHotels();
   return (
     <>
       <HotelSummary>
         <Title>Primeiro, escolha seu hotel</Title>
 
         <Summary>
-          <img src={resort} alt="resort" />
-          <HotelName>
-            Driven Resort
-          </HotelName>
-          <Description>
-            <p>Tipos de acomodação:</p>
-            <HotelProperties>Single, Double e Triple</HotelProperties>
-            <p>Vagas disponíveis:</p>
-            <HotelProperties>103</HotelProperties>
-          </Description>
+          
         </Summary>
-        <Rooms />
       </HotelSummary>
       <ChangeRoom></ChangeRoom>
     </>
