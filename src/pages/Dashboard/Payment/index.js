@@ -5,12 +5,10 @@ import useEnrollment from '../../../hooks/api/useEnrollment';
 import TicketModality from '../../../components/Dashboard/Payment/TicketSelect';
 
 export default function Payment() {
-  const { enrollment } = useEnrollment();  
-  
+  const { enrollment } = useEnrollment();
+
   if (!enrollment) {
-    return(
-      <NotSubscribedMsg />
-    );
+    return <NotSubscribedMsg />;
   }
 
   return (
@@ -18,6 +16,7 @@ export default function Payment() {
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
 
       <TicketModality />
+      {/* <PaymentArea /> */}
     </TransactionAreaContainer>
   );
 }
