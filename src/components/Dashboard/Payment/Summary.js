@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import getReservedTicket from '../../../services/getReservedTicket';
+import getReservedTicket from '../../../hooks/api/getReservedTicket';
 
-export default function Summary() {
+export default function Summary({ setSummaryTicketId }) {
   const [reservedTicketData, setReservedTicketData] = useState({ name: '', price: '' });
   const { reservedTicket } = getReservedTicket();
 
   useEffect(() => {
     if (reservedTicket) {
+      setSummaryTicketId(reservedTicket.id);
       setReservedTicketData({ name: reservedTicket.TicketType.name, price: reservedTicket.TicketType.price });
     }
   }, [reservedTicket]);

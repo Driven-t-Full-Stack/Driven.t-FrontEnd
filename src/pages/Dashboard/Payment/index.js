@@ -3,9 +3,11 @@ import PaymentArea from '../../../components/Dashboard/Payment';
 import NotSubscribedMsg from '../../../components/Dashboard/Payment/NotSubscribedMsg';
 import useEnrollment from '../../../hooks/api/useEnrollment';
 import TicketModality from '../../../components/Dashboard/Payment/TicketSelect';
+import { useState } from 'react';
 
 export default function Payment() {
   const { enrollment } = useEnrollment();
+  // const [passaPagina, setpassaPagina] = useState(false)
 
   if (!enrollment) {
     return <NotSubscribedMsg />;
@@ -15,8 +17,9 @@ export default function Payment() {
     <TransactionAreaContainer>
       <TicketAndPaymentTitle>Ingresso e pagamento</TicketAndPaymentTitle>
 
-      <TicketModality />
-      {/* <PaymentArea /> */}
+      {/* <TicketModality /> */}
+      <PaymentArea />
+      {/* { passaPagina ?  <TicketModality /> : <PaymentArea /> } */}
     </TransactionAreaContainer>
   );
 }

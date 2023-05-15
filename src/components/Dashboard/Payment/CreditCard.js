@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import CreditCard from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import styled from 'styled-components';
+import usePaymentData from '../../../hooks/api/usePaymentData';
 
-export default function CreditCardData({ setIsPaid }) {
+export default function CreditCardData({ setIsPaid, summaryTicketId }) {
+  const { paymentData } = usePaymentData();
+  
   const [cardData, setCardData] = useState({
     number: '',
     name: '',
@@ -15,6 +18,15 @@ export default function CreditCardData({ setIsPaid }) {
     const { name, value } = target;
 
     setCardData((data) => ({ ...data, [name]: value }));
+  }
+
+  function convertsDate(date) {
+    const month = date.slice(0, 2);
+    const year = '20' + date.slice(2, 4);
+
+    const formattedDate= new Date(year, month - 1, 1);
+
+    return formattedDate.toISOString();
   }
 
   function onSubmit() {
@@ -29,6 +41,20 @@ export default function CreditCardData({ setIsPaid }) {
     if (cardData.cvc.length !== 3 || isNaN(Number(cardData.cvc)))
       return alert('O código de verificação deve ser um número de 3 dígitos.');
 
+    const convertedDate = convertsDate(cardData.expiry);
+    
+    const newData = {
+      ticketId: summaryTicketId,
+      cardData: {
+        issuer: 'VISA',
+        number: cardData.number,
+        name: cardData.name,
+        expirationDate: convertedDate,
+        cvv: cardData.cvc
+      }
+    };
+
+    paymentData(newData);
     setIsPaid(true);
   }
 
