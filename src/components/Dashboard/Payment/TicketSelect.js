@@ -73,7 +73,7 @@ export default function TicketModality(props) {
   const insertReserve = async(e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.REACT_APP_API_BASE_URL + 'tickets', { ticketTypeId: onlinePriceId });
+      const res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', { ticketTypeId: onlinePriceId });
       props.setJumpPage(false);
       alert('Reserva concluída com sucesso');
     } catch (error) {
@@ -84,12 +84,12 @@ export default function TicketModality(props) {
     e.preventDefault();
     try {
       let res = undefined;
-      if (sum === 250) {
-        res = await axios.post(process.env.REACT_APP_API_BASE_URL + 'tickets', {
+      if (sum === onsiteNoHotelPrice) {
+        res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', {
           ticketTypeId: onsiteNoHotelPriceId,
         });
-      } else if (sum === 600) {
-        res = await axios.post(process.env.REACT_APP_API_BASE_URL + 'tickets', {
+      } else {
+        res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', {
           ticketTypeId: onsiteHotelPriceId,
         });
       }
