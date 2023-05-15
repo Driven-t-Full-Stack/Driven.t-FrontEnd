@@ -1,22 +1,25 @@
 import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import getRooms from '../../../hooks/api/getRooms';
 import person from '../../../assets/images/person.png';
 import personBlack from '../../../assets/images/personBlack.png';
 import personGray from '../../../assets/images/personGray.png';
 import personPink from '../../../assets/images/personPink.png';
 
-export default function Rooms() {
+export default function Rooms(props) {
+  const [rooms, setRooms] = useState([]);
+  let res = getRooms(props.hotelId);
   return <>
     <Title>Ótima pedida! Agora escolha seu quarto:</Title>
     <RoomsArea>
-      <Room>
-        <p>101</p>
-        <People>
-          <img src={person} alt="person" />
-          <img src={personBlack} alt="person" />
-          <img src={personGray} alt="person" />
-          <img src={personPink} alt="person" />
-        </People>
-      </Room>
+      {rooms.map((room) => (
+        <Room key={room.id} hotel={room}>
+          <p>101</p>
+          {Array[room.availability].map((availability) => (
+            <img src={person} alt="person" />
+          ))}
+        </Room>
+      ))}
       
     </RoomsArea>
     <Accommodation><p>RESERVAR QUARTO</p></Accommodation>

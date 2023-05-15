@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import HotelArea from '../../../components/Dashboard/Hotel';
+import HotelsArea from '../../../components/Dashboard/Hotel';
 import HotelNotAllowed from '../../../components/Dashboard/Hotel/hotelNotAllowed';
 
 export default function Hotel() {
@@ -20,7 +20,7 @@ export default function Hotel() {
     <HotelAreaContainer>
       <Title>Escolha de hotel e quarto</Title>
 
-      <HotelArea />
+      <HotelsArea />
     </HotelAreaContainer>
   );
 }
