@@ -7,6 +7,7 @@ import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
 export default function TicketModality() {
   const [onlinePrice, setOnlinePrice] = useState(undefined);
   const [onsiteNoHotelPrice, setOnsiteNoHotelPrice] = useState(undefined);
+  const [onsiteHotelPrice, setOnsiteHotelPrice] = useState(undefined);
   const { onlineTicket }  = getOnlineTicket();
   const { onsiteTicketNoHotel }  = getTicketWithOutHotel();
   const { onsiteTicketHotel }  = getTicketWithHotel();
@@ -25,12 +26,12 @@ export default function TicketModality() {
       setSum(0);
     } else {
       setSelectedDivsBlock1([value]);
-      if (value === 250) {
+      if (value === onsiteNoHotelPrice) {
         setShowBlock2(true);
       } else {
         setShowBlock2(false);
       }
-      if (value === 100) {
+      if (value === onlinePrice) {
         setShowOnline(true);
       } else {
         setShowOnline(false);
@@ -63,11 +64,12 @@ export default function TicketModality() {
   };
   
   useEffect(() => {
-    if (onlineTicket && onsiteTicketNoHotel) {    
+    if (onlineTicket && onsiteTicketNoHotel && onsiteTicketHotel) {    
       setOnlinePrice(onlineTicket.price);
       setOnsiteNoHotelPrice(onsiteTicketNoHotel.price);
+      setOnsiteHotelPrice(onsiteTicketHotel.price - onsiteTicketNoHotel.price);
     }    
-  }, [onlineTicket, onsiteTicketNoHotel]);  
+  }, [onlineTicket, onsiteTicketNoHotel, onsiteTicketHotel]);  
   
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
@@ -75,27 +77,27 @@ export default function TicketModality() {
         <Title>Primeiro, escolha sua modalidade de ingresso</Title>
 
         <Tickets>
-          <Div selected={selectedDivsBlock1.includes(250)} onClick={() => handleDivClickBlock1(250)}>
+          <Div selected={selectedDivsBlock1.includes(onsiteNoHotelPrice)} onClick={() => handleDivClickBlock1(onsiteNoHotelPrice)}>
             <NotIsRemote>
               Presencial
             </NotIsRemote>
             <Value>
-              R$ 250
+              R$ {onsiteNoHotelPrice}
             </Value>
           </Div>
-          <Div selected={selectedDivsBlock1.includes(100)} onClick={() => handleDivClickBlock1(100)}>
+          <Div selected={selectedDivsBlock1.includes(onlinePrice)} onClick={() => handleDivClickBlock1(onlinePrice)}>
             <IsRemote>
               Online
             </IsRemote>
             <Value>
-              R$ 100
+              R$ {onlinePrice}
             </Value>
           </Div>
         </Tickets>
         {showOnline &&
           (
             <>
-              <TotalSum style={{ marginTop: '23px' }}>Fechado! O total ficou em <span style={{ fontWeight: '700' }}>R$ 100</span>. Agora é só confirmar: </TotalSum>
+              <TotalSum style={{ marginTop: '23px' }}>Fechado! O total ficou em <span style={{ fontWeight: '700' }}>R$ {onlinePrice}</span>. Agora é só confirmar: </TotalSum>
               <Button>RESERVAR INGRESSO</Button>
             </>
           )}
@@ -112,12 +114,12 @@ export default function TicketModality() {
                 + R$ 0
               </Value>
             </Div>
-            <Div selected={selectedDivsBlock2.includes(350)} onClick={() => handleDivClickBlock2(350)}>
+            <Div selected={selectedDivsBlock2.includes(onsiteHotelPrice)} onClick={() => handleDivClickBlock2(onsiteHotelPrice)}>
               <Hotel>
                 Com Hotel
               </Hotel>
               <Value>
-                + R$ 350
+                + R$ {onsiteHotelPrice}
               </Value>
             </Div>
           </Tickets>
