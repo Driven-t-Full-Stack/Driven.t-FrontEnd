@@ -2,34 +2,26 @@ import React, { useState, useEffect } from 'react';
 import styled from'styled-components';
 import Hotel from '../../../pages/Dashboard/Hotel';
 import ChangeRoom from './changeRoom';
-import hotelApi from '../../../pages/';
-import useAsync from '../../../hooks/useAsync';
-import useToken from '../../../hooks/useAsync';
+import getHotels from '../../../hooks/api/getHotels';
 
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
-  const token = useToken();
-
-  const {
-    data: hotels,
-    loading: hotelsLoading,
-    error: hotelsError,
-    run: getHotels
-  } = useAsync(() => hotelApi.getHotels(token), []);
+  let count = 0;
   
   useEffect(() => {
-    if (hotels) {
-      setHotelsData([...hotelsData, hotels]);
+    const { hotels } = getHotels();
+    setHotelsData(hotels);
+    if (count === 0) {
+      count = 1;
     }
-    console.log(hotels);
-  }, [hotels]);
+  }, [count]);
 
   return (
     <>
       <HotelSummary>
         <Title>Primeiro, escolha seu hotel</Title>
         <Summary>
-          {hotelsData.map((hotel) => (
+          {hotelsData?.map((hotel) => (
             <Hotel key={hotel.id} hotel={hotel} />
           ))}
         </Summary>
