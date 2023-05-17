@@ -1,23 +1,26 @@
 import styled from 'styled-components';
-import Rooms from './roomsArea';
+//import Rooms from './roomsArea';
+//<Rooms />
 
 export default function Hotel(props) {
   console.log(props);
   return (
     <>
       <Summary>
-        <img src={props.hotel.image} alt={`imagem de ${props.name}`}/>
-        <HotelName>
-          {props.hotel.name}
-        </HotelName>
-        <Description>
-          <p>Tipos de acomodação:</p>
-          <HotelProperties>Single, Double e Triple</HotelProperties>
-          <p>Vagas disponíveis:</p>
-          <HotelProperties>103</HotelProperties>
-        </Description>
+        <div>
+          <img src={props.hotel.image} alt={`imagem de ${props.name}`}/>
+          <HotelName>
+            {props.hotel.name}
+          </HotelName>
+          <Description>
+            <p>Tipos de acomodação:</p>
+            <HotelProperties>Single, Double e Triple</HotelProperties>
+            <p>Vagas disponíveis:</p>
+            <HotelProperties>103</HotelProperties>
+          </Description>
+        </div>
       </Summary>
-      <Rooms />
+      
     </>
   );
 }
@@ -26,16 +29,19 @@ const Summary = styled.div`
   width: 196px;
   height: 264px;
   background-color: #EBEBEB;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  padding-left: 14px;
-
+  align-items: center;
+  column-gap: 15px;
+  div{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
   img{
     width: 168px;
     height: 109px;
-    margin: 10px 0px;
   }
 `;
 
