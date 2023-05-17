@@ -8,6 +8,7 @@ export default function CreditCardData({ setIsPaid, summaryTicketId }) {
   const { paymentData } = usePaymentData();
   
   const [cardData, setCardData] = useState({
+    issuer: '',
     number: '',
     name: '',
     expiry: '',
@@ -25,8 +26,27 @@ export default function CreditCardData({ setIsPaid, summaryTicketId }) {
     const year = '20' + date.slice(2, 4);
 
     const formattedDate= new Date(year, month - 1, 1);
+    setCardData({ ...cardData, expiry: formattedDate.toISOString() });
 
     return formattedDate.toISOString();
+  }
+
+  function getCardIssuer(cardNumber) {
+    const firstDigit = cardNumber.charAt(0);
+    const secondDigit = cardNumber.charAt(1);
+
+    if (firstDigit === '4') {
+      setCardData({ ...cardData, issuer: 'VISA' });
+      return 'VISA';
+    } else if (firstDigit === '5' && parseInt(secondDigit) >= 1 && parseInt(secondDigit) <= 5) {
+      setCardData({ ...cardData, issuer: 'MASTERCARD' });
+      return 'MASTERCARD';
+    } else if (firstDigit === '2' && parseInt(secondDigit) >= 3 && parseInt(secondDigit) <= 6) {
+      setCardData({ ...cardData, issuer: 'MASTERCARD' });
+      return 'MASTERCARD';
+    } else {
+      return '';
+    }
   }
 
   function onSubmit() {
@@ -43,10 +63,14 @@ export default function CreditCardData({ setIsPaid, summaryTicketId }) {
 
     const convertedDate = convertsDate(cardData.expiry);
     
+    const issuerData = getCardIssuer(cardData.number);
+    
+    if (issuerData === '') return alert('Somente são aceitos cartões das bandeiras VISA ou MASTERCARD. \nPor favor, utilize um cartão válido.');
+    
     const newData = {
       ticketId: summaryTicketId,
       cardData: {
-        issuer: 'VISA',
+        issuer: issuerData,
         number: cardData.number,
         name: cardData.name,
         expirationDate: convertedDate,
@@ -61,7 +85,14 @@ export default function CreditCardData({ setIsPaid, summaryTicketId }) {
   return (
     <PaymentRequest>
       <CreditCardArea>
-        <CreditCard number={cardData.number} name={cardData.name} expiry={cardData.expiry} cvc={cardData.cvc} />
+        <CreditCard 
+          acceptedCards={['visa', 'mastercard']}
+          number={cardData.number} 
+          name={cardData.name} 
+          expiry={cardData.expiry} 
+          cvc={cardData.cvc}
+          issuer={cardData.issuer}
+        />
         <CreditCardInformation>
           <Input
             type="text"
