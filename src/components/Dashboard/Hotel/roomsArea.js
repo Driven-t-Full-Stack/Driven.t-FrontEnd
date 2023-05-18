@@ -8,29 +8,43 @@ import personPink from '../../../assets/images/personPink.png';
 
 export default function Rooms(props) {
   const [rooms, setRooms] = useState([]);
-  const { Rooms } = getRooms(props.hotelId);
+  const [isLoading, setIsLoading] = useState(true);
+  const { Hotel } = getRooms(props.hotelId);
+  
   useEffect(() => {
-    if ( Rooms ) {
-      setRooms(Rooms);
+    if (Hotel) {
+      setRooms(Hotel.Rooms);
+      setIsLoading(false);
     }
-  }, [Rooms]);
+  }, [Hotel]);
+  
+  let roomsContent = null;
+  if (rooms.length > 0) {
+    roomsContent = (
+      <>
+        <Title>Ótima pedida! Agora escolha seu quarto:</Title>
+        <RoomsArea>
+          {rooms.map((room) => (
+            <Room key={room.id} hotel={room}>
+              <p>101</p>
+              <div>
+                {Array(room.capacity).fill().map((_, index) => (
+                  <img key={index} src={person} alt="person" />
+                ))}
+              </div>
+            </Room>
+          ))}
+        </RoomsArea>
+      </>
+    );
+  }
   
   return (
     <>
-      { rooms.length > 0 ? 
-        <><Title>Ótima pedida! Agora escolha seu quarto:</Title>
-          <RoomsArea>
-            {rooms.map((room) => (
-              <Room key={room.id} hotel={room}>
-                <p>101</p>
-                {Array[room.capacity].map((capacity) => (
-                  <img key={room.capacity.id} src={person} alt="person" />
-                ))}
-              </Room>
-            ))}
-          </RoomsArea>
-          <Accommodation><p>RESERVAR QUARTO</p></Accommodation>
-        </> : <></>}
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : roomsContent}
+      <Accommodation><p>RESERVAR QUARTO</p></Accommodation>
     </>
   );
 }
@@ -62,6 +76,10 @@ width: 190px;
 height: 45px;
 border: 1px solid #CECECE;
 border-radius: 10px;
+div{
+  display: flex;
+  justify-content: reverse;
+}
 p{
     font-family: 'Roboto';
     font-style: normal;
@@ -74,13 +92,8 @@ p{
 img{
     width: 20px;
     height: 20px;
-    margin: 0px 2px;
+    margin: 0px 3px;
 }`;
-
-const People = styled.div`
-display: flex;
-flex-direction: row-reverse;
-`;
 
 const Accommodation = styled.button`
 display: flex;

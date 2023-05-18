@@ -13,7 +13,7 @@ export default function HotelsArea(props) {
     if(hotels) {
       setHotelsData(hotels);
     }
-  }, [hotels]);
+  }, [hotelId, hotels]);
   
   function updateHotelId(id) {
     setHotelId(id);
@@ -40,7 +40,6 @@ export default function HotelsArea(props) {
 //
 const HotelSummary = styled.div`
 width: 100%;
-height: 100%;
 `;
 
 const Title = styled.h1`

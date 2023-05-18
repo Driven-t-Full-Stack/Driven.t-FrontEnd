@@ -7,16 +7,16 @@ export default function getRooms(hotelId) {
   const token = useToken();
     
   const {
-    data: Rooms,
-    loading: RoomssLoading,
-    error: RoomssError,
+    data: Hotel,
+    loading: HotelsLoading,
+    error: HotelError,
     act: getHotelWithRooms
   } = useAsync(() => hotelApi.getHotelWithRooms(token, hotelId));
   
   return {
-    Rooms,
-    RoomssLoading,
-    RoomssError,
+    Hotel,
+    HotelsLoading,
+    HotelError,
     getHotelWithRooms
   };
 }

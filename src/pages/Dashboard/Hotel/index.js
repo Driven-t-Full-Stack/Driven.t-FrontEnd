@@ -31,7 +31,6 @@ export default function Hotel() {
   return (
     <HotelAreaContainer>
       <Title>Escolha de hotel e quarto</Title>
-
       <HotelsArea />
     </HotelAreaContainer>
   );
