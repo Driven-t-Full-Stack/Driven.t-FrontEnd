@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import getRooms from '../../../hooks/api/getRooms';
+import useSaveBooking from '../../../hooks/api/useSaveBooking';
 import person from '../../../assets/images/person.png';
 import personBlack from '../../../assets/images/personBlack.png';
 import personGray from '../../../assets/images/personGray.png';
@@ -10,6 +11,7 @@ export default function Rooms(props) {
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { Hotel } = getRooms(props.hotelId);
+  const [roomId, setRoomId] = useState(null);
   
   useEffect(() => {
     if (Hotel) {
@@ -17,6 +19,8 @@ export default function Rooms(props) {
       setIsLoading(false);
     }
   }, [Hotel]);
+
+  const { saveBooking } = useSaveBooking(); // Invoke the custom hook and extract the saveBooking function
   
   let roomsContent = null;
   if (rooms.length > 0) {
@@ -25,8 +29,8 @@ export default function Rooms(props) {
         <Title>Ótima pedida! Agora escolha seu quarto:</Title>
         <RoomsArea>
           {rooms.map((room) => (
-            <Room key={room.id} hotel={room}>
-              <p>101</p>
+            <Room onClick={() => {setRoomId(room.id);}} key={room.id} hotel={room}>
+              <p>{room.id}</p>
               <div>
                 {Array(room.capacity).fill().map((_, index) => (
                   <img key={index} src={person} alt="person" />
@@ -44,7 +48,10 @@ export default function Rooms(props) {
       {isLoading ? (
         <div>Loading...</div>
       ) : roomsContent}
-      <Accommodation><p>RESERVAR QUARTO</p></Accommodation>
+      <Accommodation>
+        <div onClick={() => saveBooking({ roomId: roomId })}>
+          <p>RESERVAR QUARTO</p></div>
+      </Accommodation>
     </>
   );
 }
@@ -96,9 +103,6 @@ img{
 }`;
 
 const Accommodation = styled.button`
-display: flex;
-justify-content: center;
-align-items: center;
 margin-top: 20px;
 width: 182px;
 height: 37px;
@@ -112,5 +116,12 @@ font-weight: 400;
 font-size: 14px;
 line-height: 16px;
 color: #000000;
+}
+div{
+  height: 100%;
+  width: 100%;
+  display: flex;
+justify-content: center;
+align-items: center;
 }
 `;
