@@ -42,7 +42,7 @@ const Summary = styled.div`
   width: 196px;
   height: 264px;
   background-color: #FFEED2;
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: left;

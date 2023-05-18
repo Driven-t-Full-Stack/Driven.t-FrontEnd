@@ -8,22 +8,31 @@ import personPink from '../../../assets/images/personPink.png';
 
 export default function Rooms(props) {
   const [rooms, setRooms] = useState([]);
-  let res = getRooms(props.hotelId);
-  return <>
-    <Title>Ótima pedida! Agora escolha seu quarto:</Title>
-    <RoomsArea>
-      {rooms.map((room) => (
-        <Room key={room.id} hotel={room}>
-          <p>101</p>
-          {Array[room.availability].map((availability) => (
-            <img src={person} alt="person" />
-          ))}
-        </Room>
-      ))}
-      
-    </RoomsArea>
-    <Accommodation><p>RESERVAR QUARTO</p></Accommodation>
-  </>;
+  const { Rooms } = getRooms(props.hotelId);
+  useEffect(() => {
+    if ( Rooms ) {
+      setRooms(Rooms);
+    }
+  }, [Rooms]);
+  
+  return (
+    <>
+      { rooms.length > 0 ? 
+        <><Title>Ótima pedida! Agora escolha seu quarto:</Title>
+          <RoomsArea>
+            {rooms.map((room) => (
+              <Room key={room.id} hotel={room}>
+                <p>101</p>
+                {Array[room.capacity].map((capacity) => (
+                  <img key={room.capacity.id} src={person} alt="person" />
+                ))}
+              </Room>
+            ))}
+          </RoomsArea>
+          <Accommodation><p>RESERVAR QUARTO</p></Accommodation>
+        </> : <></>}
+    </>
+  );
 }
 
 const Title = styled.p`

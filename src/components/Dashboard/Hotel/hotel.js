@@ -1,9 +1,6 @@
 import styled from 'styled-components';
-//import Rooms from './roomsArea';
-//<Rooms />
 
 export default function Hotel(props) {
-  console.log(props);
   return (
     <>
       <Summary>
@@ -33,15 +30,23 @@ const Summary = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  column-gap: 15px;
+  justify-content: center;
+  padding: 10px;
+
   div{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: left;
+  gap: 10px;
   }
+
   img{
     width: 168px;
     height: 109px;
+    border-radius: 5px;
   }
 `;
 
@@ -51,12 +56,11 @@ height: 100%;
 display: flex;
 flex-direction: column;
   p {
-    height: 23px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
-    line-height: 23px;
+    line-height: 14px;
   }
 `;
 
@@ -70,11 +74,10 @@ color: #3C3C3C;
 `;
 
 const HotelProperties = styled.p`
-height: 23px;
+color: #3C3C3C;
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
 font-size: 12px;
 line-height: 14px;
-margin-bottom: 10px;
 `;
