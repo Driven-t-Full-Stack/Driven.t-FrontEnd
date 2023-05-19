@@ -32,7 +32,7 @@ export default function HotelsArea(props) {
           ))}
         </Summary>
       </HotelSummary>
-      {selectedHotelId ? <Rooms hotelId={selectedHotelId}></Rooms> : <></>}
+      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} /> : <></>}
       <ChangeRoom></ChangeRoom>
     </>
   );
