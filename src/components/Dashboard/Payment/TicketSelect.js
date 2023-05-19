@@ -4,6 +4,7 @@ import getOnlineTicket from '../../../hooks/api/getOnlineTicket';
 import getTicketWithOutHotel from '../../../hooks/api/getTicketWithOutHotel';
 import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
 import useEnrollment from '../../../hooks/api/useEnrollment';
+import useToken from '../../../hooks/useToken';
 import axios from 'axios';
 
 export default function TicketModality(props) {
@@ -23,6 +24,7 @@ export default function TicketModality(props) {
   const [showSum, setShowSum] = useState(false);
   const [sum, setSum] = useState(0);
   const [showOnline, setShowOnline] = useState(false);
+  const token = useToken();
   const { enrollment } = useEnrollment();
 
   const handleDivClickBlock1 = (value) => {
@@ -73,7 +75,12 @@ export default function TicketModality(props) {
   const insertReserve = async(e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', { ticketTypeId: onlinePriceId });
+      const res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', { ticketTypeId: onlinePriceId }, { 
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      );
       props.setJumpPage(false);
       alert('Reserva concluída com sucesso');
     } catch (error) {
@@ -85,12 +92,16 @@ export default function TicketModality(props) {
     try {
       let res = undefined;
       if (sum === onsiteNoHotelPrice) {
-        res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', {
-          ticketTypeId: onsiteNoHotelPriceId,
+        res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', { ticketTypeId: onsiteNoHotelPriceId }, { 
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
       } else {
-        res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', {
-          ticketTypeId: onsiteHotelPriceId,
+        res = await axios.post(process.env.REACT_APP_API_BASE_URL + '/tickets', { ticketTypeId: onsiteHotelPriceId }, { 
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
       }
       props.setJumpPage(false);
