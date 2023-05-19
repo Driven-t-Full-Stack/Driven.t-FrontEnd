@@ -12,7 +12,7 @@ export default function Rooms(props) {
   const [isLoading, setIsLoading] = useState(true);
   const { Hotel } = getRooms(props.hotelId);
   const [roomId, setRoomId] = useState(null);
-  
+
   useEffect(() => {
     if (Hotel) {
       setRooms(Hotel.Rooms);
@@ -20,8 +20,8 @@ export default function Rooms(props) {
     }
   }, [Hotel]);
 
-  const { saveBooking } = useSaveBooking(); // Invoke the custom hook and extract the saveBooking function
-  
+  const { saveBooking } = useSaveBooking();
+
   let roomsContent = null;
   if (rooms.length > 0) {
     roomsContent = (
@@ -29,7 +29,12 @@ export default function Rooms(props) {
         <Title>Ótima pedida! Agora escolha seu quarto:</Title>
         <RoomsArea>
           {rooms.map((room) => (
-            <Room onClick={() => {setRoomId(room.id);}} key={room.id} hotel={room}>
+            <Room
+              key={room.id}
+              hotel={room}
+              selected={roomId === room.id}
+              onClick={() => setRoomId(room.id)}
+            >
               <p>{room.id}</p>
               <div>
                 {Array(room.capacity).fill().map((_, index) => (
@@ -42,19 +47,54 @@ export default function Rooms(props) {
       </>
     );
   }
-  
+
   return (
     <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : roomsContent}
+      {isLoading ? <div>Loading...</div> : roomsContent}
       <Accommodation>
         <div onClick={() => saveBooking({ roomId: roomId })}>
-          <p>RESERVAR QUARTO</p></div>
+          <p>RESERVAR QUARTO</p>
+        </div>
       </Accommodation>
     </>
   );
 }
+
+const Room = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 190px;
+  height: 45px;
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  background-color: ${(props) => (props.selected ? '#FFEED2' : 'white')};
+
+  div {
+    display: flex;
+    justify-content: reverse;
+  }
+
+  p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    color: #454545;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0px 3px;
+  }
+`;
 
 const Title = styled.p`
 font-family: 'Roboto';
@@ -70,37 +110,6 @@ const RoomsArea = styled.div`
 display: flex;
 flex-direction: row;
 `;
-
-const Room = styled.div`
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-align-items: center;
-justify-content: space-between;
-padding: 5px;
-box-sizing: border-box;
-width: 190px;
-height: 45px;
-border: 1px solid #CECECE;
-border-radius: 10px;
-div{
-  display: flex;
-  justify-content: reverse;
-}
-p{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    color: #454545;
-}
-img{
-    width: 20px;
-    height: 20px;
-    margin: 0px 3px;
-}`;
 
 const Accommodation = styled.button`
 margin-top: 20px;
