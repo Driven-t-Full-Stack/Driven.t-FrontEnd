@@ -7,16 +7,17 @@ import Rooms from './roomsArea';
 
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
-  const [ hotelId, setHotelId ]  = useState(null);
+  const [selectedHotelId, setSelectedHotelId] = useState(null);
   const { hotels } = getHotels();
+
   useEffect(() => {
-    if(hotels) {
+    if (hotels) {
       setHotelsData(hotels);
     }
-  }, [hotelId, hotels]);
-  
+  }, [selectedHotelId, hotels]);
+
   function updateHotelId(id) {
-    setHotelId(id);
+    setSelectedHotelId(id);
   }
 
   return (
@@ -25,13 +26,13 @@ export default function HotelsArea(props) {
         <Title>Primeiro, escolha seu hotel</Title>
         <Summary>
           {hotelsData.map((hotel) => (
-            <div key={hotel.id} onClick={() => {updateHotelId(hotel.id);}}>
-              <Hotel  hotel={hotel} />
+            <div key={hotel.id} onClick={() => updateHotelId(hotel.id)}>
+              <Hotel hotel={hotel} selectedHotelId={selectedHotelId} updateHotelId={updateHotelId} />
             </div>
           ))}
         </Summary>
       </HotelSummary>
-      {hotelId ? <Rooms hotelId={hotelId}></Rooms> : <></>}
+      {selectedHotelId ? <Rooms hotelId={selectedHotelId}></Rooms> : <></>}
       <ChangeRoom></ChangeRoom>
     </>
   );

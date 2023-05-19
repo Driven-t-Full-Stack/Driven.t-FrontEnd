@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export default function Hotel(props) {
+  const { hotel, selectedHotelId, updateHotelId } = props;
+
   return (
     <>
-      <Summary>
+      <Summary selected={selectedHotelId === hotel.id}>
         <div>
-          <img src={props.hotel.image} alt={`imagem de ${props.name}`}/>
-          <HotelName>
-            {props.hotel.name}
-          </HotelName>
+          <img src={hotel.image} alt={`imagem de ${hotel.name}`} />
+          <HotelName>{hotel.name}</HotelName>
           <Description>
             <p>Tipos de acomodação:</p>
             <HotelProperties>Single, Double e Triple</HotelProperties>
@@ -17,7 +17,6 @@ export default function Hotel(props) {
           </Description>
         </div>
       </Summary>
-      
     </>
   );
 }
@@ -25,7 +24,7 @@ export default function Hotel(props) {
 const Summary = styled.div`
   width: 196px;
   height: 264px;
-  background-color: #EBEBEB;
+  background-color: ${(props) => (props.selected ? '#FFEED2' : '#EBEBEB')};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -33,17 +32,17 @@ const Summary = styled.div`
   justify-content: center;
   padding: 10px;
 
-  div{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  align-items: left;
-  gap: 10px;
+  div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: left;
+    gap: 10px;
   }
 
-  img{
+  img {
     width: 168px;
     height: 109px;
     border-radius: 5px;
