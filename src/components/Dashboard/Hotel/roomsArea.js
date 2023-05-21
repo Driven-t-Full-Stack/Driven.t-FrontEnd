@@ -22,6 +22,15 @@ export default function Rooms(props) {
 
   const { saveBooking } = useSaveBooking();
 
+  const handleSaveBooking = async() => {
+    try {
+      await saveBooking({ roomId: roomId });
+    } catch (error) {
+      // Handle the error here (e.g., display an error message)
+      console.error('Error saving booking:', error);
+    }
+  };
+
   let roomsContent = null;
   if (rooms.length > 0) {
     roomsContent = (
@@ -52,7 +61,7 @@ export default function Rooms(props) {
     <>
       {isLoading ? <div>Loading...</div> : roomsContent}
       <Accommodation>
-        <div onClick={() => saveBooking({ roomId: roomId })}>
+        <div onClick={() => handleSaveBooking({ roomId: roomId })}>
           <p>RESERVAR QUARTO</p>
         </div>
       </Accommodation>
@@ -66,6 +75,7 @@ const Room = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  margin: 3px 0px;
   padding: 5px;
   box-sizing: border-box;
   width: 190px;
@@ -109,6 +119,9 @@ margin: 20px 0px;
 const RoomsArea = styled.div`
 display: flex;
 flex-direction: row;
+flex-wrap: wrap;
+margin: 15px 0px;
+gap: 15px;
 `;
 
 const Accommodation = styled.button`
