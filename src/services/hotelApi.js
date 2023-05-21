@@ -6,8 +6,7 @@ export async function getHotels(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  return response.data[0];
+  return response.data;
 }
 
 export async function getHotelWithRooms(token, hotelId) {
