@@ -12,23 +12,25 @@ export const RoomComponent = ({ room, selected, onClick }) => {
 
   useEffect(() => {
     if (bookings) {
-      setRoomBookings(bookings.map(() => true));
+      const occupancy = bookings.length;
+      setRoomBookings(Array(room.capacity).fill().map((_, index) => index < occupancy));
     }
-  }, [bookings]);
+  }, [bookings, room.capacity]);
+
+  const isRoomFull = roomBookings.every(booking => booking);
 
   return (
     <Room
-      key={room.id}
-      hotel={room}
+      full={isRoomFull}
       selected={selected}
       onClick={onClick}
     >
       <p>{room.id}</p>
       <div>
-        {Array(room.capacity).fill().map((_, index) => (
+        {roomBookings.map((booking, index) => (
           <img
             key={index}
-            src={roomBookings[index] ? personBlack : person}
+            src={booking ? personBlack : person}
             alt="person"
           />
         ))}
@@ -50,11 +52,19 @@ const Room = styled.div`
   height: 45px;
   border: 1px solid #cecece;
   border-radius: 10px;
-  background-color: ${(props) => (props.selected ? '#FFEED2' : 'white')};
+  background-color: ${(props) => {
+    if (props.full) {
+      return '#E9E9E9';
+    } else if (props.selected) {
+      return '#FFEED2';
+    } else {
+      return 'white';
+    }
+  }};
 
   div {
     display: flex;
-    justify-content: reverse;
+    justify-content: flex-end;
   }
 
   p {
@@ -72,4 +82,5 @@ const Room = styled.div`
     height: 20px;
     margin: 0px 3px;
   }
-`; 
+`;
+
