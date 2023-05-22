@@ -42,8 +42,9 @@ export default function HotelsArea(props) {
   );
 }
 
+//
 const HotelSummary = styled.div`
-  width: 100%;
+width: 100%;
 `;
 
 const Title = styled.h1`
@@ -65,4 +66,3 @@ const ErrorContainer = styled.div`
   font-weight: bold;
   margin: 20px;
 `;
-

@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
+import { RoomComponent } from './room';
 import getRooms from '../../../hooks/api/getRooms';
 import useSaveBooking from '../../../hooks/api/useSaveBooking';
-import person from '../../../assets/images/person.png';
-import personBlack from '../../../assets/images/personBlack.png';
-import personGray from '../../../assets/images/personGray.png';
-import personPink from '../../../assets/images/personPink.png';
 
 export default function Rooms(props) {
   const [rooms, setRooms] = useState([]);
@@ -26,7 +23,6 @@ export default function Rooms(props) {
     try {
       await saveBooking({ roomId: roomId });
     } catch (error) {
-      // Handle the error here (e.g., display an error message)
       console.error('Error saving booking:', error);
     }
   };
@@ -38,19 +34,12 @@ export default function Rooms(props) {
         <Title>Ótima pedida! Agora escolha seu quarto:</Title>
         <RoomsArea>
           {rooms.map((room) => (
-            <Room
+            <RoomComponent
               key={room.id}
-              hotel={room}
+              room={room}
               selected={roomId === room.id}
               onClick={() => setRoomId(room.id)}
-            >
-              <p>{room.id}</p>
-              <div>
-                {Array(room.capacity).fill().map((_, index) => (
-                  <img key={index} src={person} alt="person" />
-                ))}
-              </div>
-            </Room>
+            />
           ))}
         </RoomsArea>
       </>
@@ -68,43 +57,6 @@ export default function Rooms(props) {
     </>
   );
 }
-
-const Room = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  margin: 3px 0px;
-  padding: 5px;
-  box-sizing: border-box;
-  width: 190px;
-  height: 45px;
-  border: 1px solid #cecece;
-  border-radius: 10px;
-  background-color: ${(props) => (props.selected ? '#FFEED2' : 'white')};
-
-  div {
-    display: flex;
-    justify-content: reverse;
-  }
-
-  p {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    color: #454545;
-  }
-
-  img {
-    width: 20px;
-    height: 20px;
-    margin: 0px 3px;
-  }
-`;
 
 const Title = styled.p`
 font-family: 'Roboto';
