@@ -5,6 +5,7 @@ import getRooms from '../../../hooks/api/getRooms';
 import useSaveBooking from '../../../hooks/api/useSaveBooking';
 
 export default function Rooms(props) {
+  const { updateBooking }  = props;
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { Hotel } = getRooms(props.hotelId);
@@ -22,6 +23,7 @@ export default function Rooms(props) {
   const handleSaveBooking = async() => {
     try {
       await saveBooking({ roomId: roomId });
+      updateBooking();
     } catch (error) {
       // Handle the error here (e.g., display an error message)      
       console.error('Error saving booking:', error);

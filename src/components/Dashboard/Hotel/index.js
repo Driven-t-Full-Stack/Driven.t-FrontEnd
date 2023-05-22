@@ -3,21 +3,32 @@ import styled from 'styled-components';
 import Hotel from './hotel';
 import ChangeRoom from './changeRoom';
 import getHotels from '../../../hooks/api/getHotels';
+import getUserBooking from '../../../hooks/api/getUserBooking';
 import Rooms from './roomsArea';
 
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
   const { hotels, error } = getHotels();
+  const { userBooking } = getUserBooking();
+  const [isBooked, setIsBooked] = useState(false);
 
   useEffect(() => {
     if (hotels) {
       setHotelsData(hotels);
-    }
-  }, [selectedHotelId, hotels]);
+    }        
+  }, [selectedHotelId, hotels, isBooked]);
 
   function updateHotelId(id) {
-    setSelectedHotelId(id);
+    setSelectedHotelId(id);    
+  }
+
+  function updateBooking() {
+    setIsBooked(true);
+  }
+
+  if (isBooked || userBooking) {
+    return <ChangeRoom />;
   }
 
   if (error) {
@@ -36,8 +47,7 @@ export default function HotelsArea(props) {
           ))}
         </Summary>
       </HotelSummary>
-      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} /> : <></>}
-      <ChangeRoom></ChangeRoom>
+      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} updateBooking={updateBooking}/> : <></>}      
     </>
   );
 }
