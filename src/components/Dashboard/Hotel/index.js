@@ -8,7 +8,7 @@ import Rooms from './roomsArea';
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
-  const { hotels } = getHotels();
+  const { hotels, error } = getHotels();
 
   useEffect(() => {
     if (hotels) {
@@ -18,6 +18,10 @@ export default function HotelsArea(props) {
 
   function updateHotelId(id) {
     setSelectedHotelId(id);
+  }
+
+  if (error) {
+    return <ErrorContainer>An error occurred while fetching hotels. Please try again later.</ErrorContainer>;
   }
 
   return (
@@ -38,9 +42,8 @@ export default function HotelsArea(props) {
   );
 }
 
-//
 const HotelSummary = styled.div`
-width: 100%;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -56,3 +59,10 @@ const Summary = styled.div`
   overflow-x: auto;
   gap: 15px;
 `;
+
+const ErrorContainer = styled.div`
+  color: red;
+  font-weight: bold;
+  margin: 20px;
+`;
+
