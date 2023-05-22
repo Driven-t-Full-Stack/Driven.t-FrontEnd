@@ -47,3 +47,13 @@ export async function getTicketWithHotelInfo(token) {
 
   return filteredResponse[0];
 }
+
+export async function getUserTicketInfo(token) {
+  const response = await api.get('/tickets', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });  
+
+  return response.data;
+}
