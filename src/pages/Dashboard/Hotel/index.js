@@ -2,26 +2,26 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import HotelsArea from '../../../components/Dashboard/Hotel';
 import HotelNotAllowed from '../../../components/Dashboard/Hotel/hotelNotAllowed';
-import getTicketWithHotel from '../../../hooks/api/getTicketWithHotel';
+import getUserTicket from '../../../hooks/api/getUserTicket';
 
 export default function Hotel() {
-  const [ ticket, setTicket ] = useState(null);
-  const { onsiteTicketHotel } = getTicketWithHotel();
+  const [ ticket, setTicket ] = useState(null);  
+  const { userTicket } = getUserTicket();
 
   useEffect(() => {
-    if (onsiteTicketHotel) {
-      setTicket( onsiteTicketHotel );
+    if (userTicket) {
+      setTicket( userTicket );
     }
-  }, [onsiteTicketHotel]);
+  }, [userTicket]);
   
-  if (!ticket) return (
+  if (!ticket || ticket.status === 'RESERVED') return (
     <HotelAreaContainer>
       <Title>Escolha de hotel e quarto</Title>
       <HotelNotAllowed error="No paid ticket"></HotelNotAllowed>
     </HotelAreaContainer>
   );
-
-  if (!ticket.includesHotel) return (
+  
+  if (!ticket.TicketType.includesHotel) return (
     <HotelAreaContainer>
       <Title>Escolha de hotel e quarto</Title>
       <HotelNotAllowed error="invalid ticket"></HotelNotAllowed>

@@ -23,6 +23,7 @@ export default function Rooms(props) {
     try {
       await saveBooking({ roomId: roomId });
     } catch (error) {
+      // Handle the error here (e.g., display an error message)      
       console.error('Error saving booking:', error);
     }
   };
