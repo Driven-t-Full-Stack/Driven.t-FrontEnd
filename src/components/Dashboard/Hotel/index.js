@@ -27,8 +27,8 @@ export default function HotelsArea(props) {
     setIsBooked(true);
   }
 
-  if (isBooked || userBooking) {
-    return <ChangeRoom />;
+  if (isBooked) {
+    return <ChangeRoom setIsBooked={setIsBooked} />;
   }
 
   if (error) {
@@ -47,7 +47,7 @@ export default function HotelsArea(props) {
           ))}
         </Summary>
       </HotelSummary>
-      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} updateBooking={updateBooking}/> : <></>}      
+      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} updateBooking={updateBooking} /> : <></>}      
     </>
   );
 }

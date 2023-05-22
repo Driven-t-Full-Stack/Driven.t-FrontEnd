@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import resort from '../../../assets/images/resort.png';
 
-export default function ChangeRoom() {
+export default function ChangeRoom({ setIsBooked }) {
   return (
     <>
       <HotelSummary>
@@ -18,7 +18,7 @@ export default function ChangeRoom() {
             <HotelProperties>Você e mais 1</HotelProperties>
           </Description>
         </Summary>
-        <Accommodation>TROCAR DE QUARTO</Accommodation>
+        <Accommodation onClick={() => {setIsBooked(false);}}>TROCAR DE QUARTO</Accommodation>
       </HotelSummary>
       
     </>

@@ -29,3 +29,11 @@ export async function getUserBookingInfo(token) {
 
   return response.data;
 }
+
+export async function updateBookingById(body, bookingId, token) {
+  const response = await api.put(`/booking/${bookingId}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
