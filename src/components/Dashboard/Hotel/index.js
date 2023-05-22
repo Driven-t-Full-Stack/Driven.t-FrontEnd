@@ -28,7 +28,13 @@ export default function HotelsArea(props) {
   }
 
   if (isBooked) {
-    return <ChangeRoom setIsBooked={setIsBooked} />;
+    console.log(userBooking.Room.name);
+    console.log(userBooking.Room.hotelId);
+    return <ChangeRoom 
+      roomName={userBooking.Room.name}
+      hotelId={userBooking.Room.hotelId}
+      setIsBooked={setIsBooked}
+    />;
   }
 
   if (error) {

@@ -1,19 +1,33 @@
 import styled from 'styled-components';
 import resort from '../../../assets/images/resort.png';
+import getRooms from '../../../hooks/api/getRooms';
+import { useState, useEffect } from 'react';
 
-export default function ChangeRoom({ setIsBooked }) {
+export default function ChangeRoom(props) {
+  const { roomName, hotelId, setIsBooked } = props;
+  const { Hotel } = getRooms(hotelId);
+  const [ hotelName, setHotelName ] = useState(undefined);
+  const [ hotelImg, setHotelImg ] = useState(undefined);
+
+  useEffect(() => {
+    if (Hotel) {
+      setHotelName(Hotel.name);
+      setHotelImg(Hotel.image);
+    }        
+  }, [Hotel]);  
+
   return (
     <>
       <HotelSummary>
         <Title>Você já escolheu seu quarto:</Title>
         <Summary>
-          <img src={resort} alt="resort" />
+          <img src={hotelImg} alt="resort" />
           <HotelName>
-            Driven Resort
+            {hotelName}
           </HotelName>
           <Description>
             <p>Quarto reservado</p>
-            <HotelProperties>101 (Double)</HotelProperties>
+            <HotelProperties>{roomName}</HotelProperties>
             <p>Pessoas no seu quarto</p>
             <HotelProperties>Você e mais 1</HotelProperties>
           </Description>
@@ -60,11 +74,11 @@ width: 100%;
 height: 100%;
 display: flex;
 flex-direction: column;
+font-weight: 700;
   p {
     height: 23px;
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 700;
     font-size: 12px;
     line-height: 23px;
   }
