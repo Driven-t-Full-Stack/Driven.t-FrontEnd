@@ -9,7 +9,13 @@ import personPink from '../../../assets/images/personPink.png';
 export const RoomComponent = ({ room, selected, onClick }) => {
   const [roomBookings, setRoomBookings] = useState([]);
   const { bookings } = getBookings(room.id);
-   
+
+  useEffect(() => {
+    if (bookings) {
+      setRoomBookings(bookings.map(() => true));
+    }
+  }, [bookings]);
+
   return (
     <Room
       key={room.id}
@@ -22,7 +28,7 @@ export const RoomComponent = ({ room, selected, onClick }) => {
         {Array(room.capacity).fill().map((_, index) => (
           <img
             key={index}
-            src={roomBookings && roomBookings.includes(index) ? personBlack : person}
+            src={roomBookings[index] ? personBlack : person}
             alt="person"
           />
         ))}
