@@ -9,10 +9,10 @@ import Rooms from './roomsArea';
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
-  const { hotels } = getHotels();
+  const { hotels, error } = getHotels();
   const { userBooking } = getUserBooking();
   const [isBooked, setIsBooked] = useState(false);
-    
+
   useEffect(() => {
     if (hotels) {
       setHotelsData(hotels);
@@ -29,6 +29,10 @@ export default function HotelsArea(props) {
 
   if (isBooked || userBooking) {
     return <ChangeRoom />;
+  }
+
+  if (error) {
+    return <ErrorContainer>An error occurred while fetching hotels. Please try again later.</ErrorContainer>;
   }
 
   return (
@@ -65,4 +69,10 @@ const Summary = styled.div`
   display: flex;
   overflow-x: auto;
   gap: 15px;
+`;
+
+const ErrorContainer = styled.div`
+  color: red;
+  font-weight: bold;
+  margin: 20px;
 `;
