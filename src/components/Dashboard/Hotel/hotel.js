@@ -46,6 +46,7 @@ const Summary = styled.div`
     width: 168px;
     height: 109px;
     border-radius: 5px;
+    margin-left:4px;
   }
 `;
 
