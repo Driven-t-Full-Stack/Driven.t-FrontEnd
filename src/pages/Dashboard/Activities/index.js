@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import ActivitiesComponent from '../../../components/Dashboard/Activities';
 
 export default function Activities() {
   return (
-    <ActivitiesAreaContainer>
+    <ActivitiesArea>
       <Title>Escolha de atividades</Title>
-    </ActivitiesAreaContainer>
+      <ActivitiesComponent></ActivitiesComponent>
+    </ActivitiesArea>
   );
 }
 
-const ActivitiesAreaContainer = styled.div`
+const ActivitiesArea = styled.div`
   width: 100%;
   height: 100%;
-  
 `;
 
 const Title = styled.h1`
