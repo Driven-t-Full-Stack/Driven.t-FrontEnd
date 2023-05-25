@@ -26,6 +26,8 @@ export default function HotelsArea(props) {
     return <ChangeRoom 
       roomName={userBooking.Room.name}
       hotelId={userBooking.Room.hotelId}
+      roomId={userBooking.Room.id}
+      roomCapacity={userBooking.Room.capacity}
     />;
   }
 
