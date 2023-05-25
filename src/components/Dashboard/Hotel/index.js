@@ -11,25 +11,18 @@ export default function HotelsArea(props) {
   const [selectedHotelId, setSelectedHotelId] = useState(null);
   const { hotels, error } = getHotels();
   const { userBooking } = getUserBooking();
-  const [isBooked, setIsBooked] = useState(false);
-
+  
   useEffect(() => {
     if (hotels) {
       setHotelsData(hotels);
     }        
-  }, [selectedHotelId, hotels, isBooked]);
+  }, [selectedHotelId, hotels, userBooking]);
 
   function updateHotelId(id) {
     setSelectedHotelId(id);    
   }
 
-  function updateBooking() {
-    setIsBooked(true);
-  }
-
-  if (isBooked || userBooking) {
-    console.log(userBooking.Room.name);
-    console.log(userBooking.Room.hotelId);
+  if (userBooking) {
     return <ChangeRoom 
       roomName={userBooking.Room.name}
       hotelId={userBooking.Room.hotelId}
@@ -52,12 +45,11 @@ export default function HotelsArea(props) {
           ))}
         </Summary>
       </HotelSummary>
-      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} updateBooking={updateBooking}/> : <></>}      
+      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId}/> : <></>}      
     </>
   );
 }
 
-//
 const HotelSummary = styled.div`
 width: 100%;
 `;

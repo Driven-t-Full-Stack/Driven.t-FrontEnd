@@ -4,8 +4,7 @@ import { RoomComponent } from './room';
 import getRooms from '../../../hooks/api/getRooms';
 import useSaveBooking from '../../../hooks/api/useSaveBooking';
 
-export default function Rooms(props) {
-  const { updateBooking }  = props;
+export default function Rooms(props) {  
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { Hotel } = getRooms(props.hotelId);
@@ -23,7 +22,7 @@ export default function Rooms(props) {
   const handleSaveBooking = async() => {
     try {
       await saveBooking({ roomId: roomId });
-      updateBooking();
+      window.location.reload(true);
     } catch (error) {
       // Handle the error here (e.g., display an error message)      
       console.error('Error saving booking:', error);
