@@ -1,9 +1,24 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ActivitiesComponent from '../../../components/Dashboard/Activities';
-
+import OnlineMsg from '../../../components/Dashboard/Activity/OnlineMsg';
+import getUserTicket from '../../../hooks/api/getUserTicket';
+  
 export default function Activities() {
-  return (
+  const { userTicket } = getUserTicket();
+  const [ticketType, setTicketType] = useState(null);
+
+  useEffect(() => {
+    if (userTicket) {
+      setTicketType(userTicket.TicketType.name);          
+    }        
+  }, [userTicket, ticketType]);
+  
+  if (ticketType == 'Online') {
+    return <OnlineMsg />;
+  }
+
+    return (
     <ActivitiesArea>
       <Title>Escolha de atividades</Title>
       <ActivitiesComponent></ActivitiesComponent>
