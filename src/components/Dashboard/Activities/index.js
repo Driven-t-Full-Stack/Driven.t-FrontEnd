@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ChooseDay from './chooseDay';
+import ActivitiesComponent from './activitiesContainer';
 
-export default function ActivitiesComponent() {
+export default function Activities() {
   return (
-    <ActivitiesAreaContainer>
+    <ActivitiesArea>
       <ChooseDay></ChooseDay>
-    </ActivitiesAreaContainer>
+      <ActivitiesComponent></ActivitiesComponent>
+    </ActivitiesArea>
   );
 }
 
-const ActivitiesAreaContainer = styled.div`
+const ActivitiesArea = styled.div`
   width: 100%;
   height: 100%;
 `;
-

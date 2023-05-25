@@ -6,9 +6,11 @@ export default function ChooseDay() {
   return (
     <>
       <SubTitle>Primeiro, filtre pelo dia do evento:</SubTitle>
-      <Day date="Sexta, 22/10"></Day>
-      <Day date="Sexta, 22/10"></Day>
-      <Day date="Sexta, 22/10"></Day>
+      <Days>
+        <Day date="Sexta, 22/10"></Day>
+        <Day date="Sexta, 22/10"></Day>
+        <Day date="Sexta, 22/10"></Day>
+      </Days>
     </>
   );
 }
@@ -22,6 +24,8 @@ line-height: 23px;
 color: #8E8E8E;
 `;
 
-const days = styled.div`
-dis
-`
+const Days = styled.div`
+display: flex;
+gap: 10px;
+padding: 20px 0px;
+`;
