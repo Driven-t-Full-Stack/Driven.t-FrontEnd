@@ -4,7 +4,7 @@ import * as ticketApi from '../../services/ticketApi';
 
 export default function getUserTicket() {
   const token = useToken();
-
+ 
   const {
     data: userTicket,
     loading: ticketLoading,
