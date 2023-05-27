@@ -2,23 +2,29 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ActivitiesComponent from '../../../components/Dashboard/Activities';
 import OnlineMsg from '../../../components/Dashboard/Activity/OnlineMsg';
+import PaymentMsg from '../../../components/Dashboard/Activity/PaymentMsg';
 import getUserTicket from '../../../hooks/api/getUserTicket';
   
 export default function Activities() {
   const { userTicket } = getUserTicket();
   const [ticketType, setTicketType] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState(null);
 
   useEffect(() => {
     if (userTicket) {
-      setTicketType(userTicket.TicketType.name);          
-    }        
-  }, [userTicket, ticketType]);
-  
-  if (ticketType == 'Online') {
+      setTicketType(userTicket.TicketType.name);
+      setPaymentStatus(userTicket.status);          
+    }          
+  }, [userTicket, ticketType, paymentStatus]);
+
+  if (ticketType === 'Online') {
     return <OnlineMsg />;
   }
+  if (paymentStatus === 'RESERVED') {
+    return <PaymentMsg />;
+  } 
 
-    return (
+  return (
     <ActivitiesArea>
       <Title>Escolha de atividades</Title>
       <ActivitiesComponent></ActivitiesComponent>

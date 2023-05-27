@@ -10,9 +10,13 @@ export default function OnlineMsg() {
 
 const StyledOnlineMsg = styled.p`
 p{ 
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;  
+line-height: 23px;
 font-size: 20px;
 text-align: center;
 color: #8E8E8E;
-margin: 32% 25% 0% 25%;
+margin: 32% 20% 0% 20%;
 }
 `;
