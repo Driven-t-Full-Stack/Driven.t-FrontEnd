@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Day from './day';
 
-export default function ChooseDay({ days }) {
+export default function ChooseDay(props) {
+  const { days, setSelectedDay, selectedDay } = props;
+
   return (
     <>
       <SubTitle>Primeiro, filtre pelo dia do evento:</SubTitle>
       <Days>
-        {days.map((day) => (<Day date={day} />))}
+        {days.map((day) => (
+          <div key={day} onClick={() => {setSelectedDay(day);}}>
+            <Day date={day} setSelectedDay={setSelectedDay} selectedDay={selectedDay} />
+          </div>
+        ))}
       </Days>
     </>
   );

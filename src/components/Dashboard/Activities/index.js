@@ -6,6 +6,7 @@ import getActivities from '../../../hooks/api/getActivities';
 
 export default function Activities() {
   const [activitiesData, setActivitiesData] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(null);
   const { activities } = getActivities();
   const [days, setDays] = useState([]);
 
@@ -36,8 +37,8 @@ export default function Activities() {
 
   return (
     <ActivitiesArea>
-      <ChooseDay days={days} />
-      <ActivitiesComponent />
+      <ChooseDay days={days} setSelectedDay={setSelectedDay} selectedDay={selectedDay} />
+      <ActivitiesComponent activitiesData={activitiesData} selectedDay={selectedDay} />
     </ActivitiesArea>
   );
 }

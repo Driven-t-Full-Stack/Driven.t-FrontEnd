@@ -1,55 +1,23 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import vacancy from '../../../assets/images/vacancy.png';
 
-export default function Activity() {
+export default function Activity(props) {
+  const { activityData } = props;
+  const time = ['0', '09:00 - 10:00', '9:00 - 11:00', '9:00 - 12:00', '10:00 - 11:00', '10:00 - 12:00', '11:00 - 12:00'];
+
   return (
-    <Local>
-      <Title><p>Auditório Principal</p></Title>
-
-      <ActivityDiv>
-        <ActivityText>
-          <p><span>Minecraft: montando o PC ideal</span>
-            09:00 - 10:00</p>
-        </ActivityText>
-        <VacancyDiv>
-          <img src={vacancy} alt="vacancy"/>
-          <p>27 vagas</p>
-        </VacancyDiv>
-      </ActivityDiv>
-
-      <ActivityDiv>
-        <ActivityText>
-          <p><span>Minecraft: montando o PC ideal</span>
-            09:00 - 10:00</p>
-        </ActivityText>
-        <VacancyDiv>
-          <img src={vacancy} alt="vacancy"/>
-          <p>27 vagas</p>
-        </VacancyDiv>
-      </ActivityDiv>
-    </Local>
+    <ActivityDiv>
+      <ActivityText>
+        <p><span>{activityData.title}</span></p>
+        <p>{time[activityData.timeId]}</p>
+      </ActivityText>
+      <VacancyDiv>
+        <img src={vacancy} alt="vacancy"/>
+        <p>{activityData.availableSlots}</p>
+      </VacancyDiv>
+    </ActivityDiv>
   );
 }
-
-const Local = styled.div`
-width: 33%;
-height: 100%;
-padding: 5%;
-`;
-
-const Title = styled.div`
-margin: 0px 0px 20px 0px;
-p{
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 17px;
-line-height: 20px;
-text-align: center;
-color: #7B7B7B;
-}
-`;
 
 const ActivityDiv = styled.div`
 padding: 15px;
@@ -57,15 +25,18 @@ gap: 15px;
 background: #F1F1F1;
 border-radius: 5px;
 width: 100%;
-height: 79px;
+height: 80px;
 display: flex;
 margin: 0px 0px 10px 0px;
 `;
 
 const ActivityText = styled.div`
-width: 80%;
-height: 100%;
+width: 75%;
+height: 80%;
 gap: 5px;
+display: flex;
+flex-direction: column;
+
 p{
 font-family: 'Roboto';
 font-style: normal;
@@ -80,7 +51,7 @@ font-weight: 700;
 `;
 
 const VacancyDiv = styled.div`
-width: 20%;
+width: 25%;
 height: 100%;
 display: flex;
 flex-direction: column;
