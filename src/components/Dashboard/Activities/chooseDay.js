@@ -1,35 +1,13 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Day from './day';
-import getActvitiesDates from '../../../hooks/api/getActivitiesDates';
 
-export default function ChooseDay() {
-  const { activitiesDates } = getActvitiesDates();
-  const [activitiesData, setActivitiesData] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-
-  useEffect(() => {
-    if (activitiesDates) {
-      setActivitiesData(activitiesDates);      
-    }        
-  }, [activitiesDates]);
-
-  const handleSelectedDate = (day) => {
-    setSelectedDate(day);
-  };
-  
+export default function ChooseDay({ days }) {
   return (
     <>
       <SubTitle>Primeiro, filtre pelo dia do evento:</SubTitle>
       <Days>
-        {activitiesData.map((date, index) => (
-          <Day 
-            key={index} 
-            date={date}
-            isSelected={selectedDate === date}
-            onClick={() => handleSelectedDate(date)}
-          />          
-        ))}        
+        {days.map((day) => (<Day date={day} />))}
       </Days>
     </>
   );

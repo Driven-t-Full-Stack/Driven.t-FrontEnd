@@ -64,7 +64,7 @@ export default function ChangeRoom(props) {
             <HotelProperties>{ocuppants}</HotelProperties>
           </Description>
         </Summary>
-        <Accommodation onClick={() => {setIsBooked(false);}}>TROCAR DE QUARTO</Accommodation>
+        <Accommodation onClick={() => {setIsBooked(true);}} >TROCAR DE QUARTO</Accommodation>
       </HotelSummary>
       
     </>

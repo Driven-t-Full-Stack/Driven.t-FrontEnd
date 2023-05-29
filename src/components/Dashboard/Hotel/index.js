@@ -9,6 +9,7 @@ import Rooms from './roomsArea';
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
+  const [isBooked, setIsBooked] = useState(false);
   const { hotels, error } = getHotels();
   const { userBooking } = getUserBooking();
   
@@ -21,20 +22,14 @@ export default function HotelsArea(props) {
   function updateHotelId(id) {
     setSelectedHotelId(id);    
   }
-
-  function updateBooking() {
-    setIsBooked(true);
-  }
-
-  if (userBooking && isBooked) {
-    console.log(userBooking.Room.name);
-    console.log(userBooking.Room.hotelId);
+  
+  if (userBooking && !isBooked) {
     return <ChangeRoom 
       roomName={userBooking.Room.name}
       hotelId={userBooking.Room.hotelId}
-      setIsBooked={setIsBooked}
       roomId={userBooking.Room.id}
-      roomCapacity={userBooking.Room.capacity}      
+      roomCapacity={userBooking.Room.capacity}
+      setIsBooked={setIsBooked}
     />;
   }
 
@@ -54,7 +49,7 @@ export default function HotelsArea(props) {
           ))}
         </Summary>
       </HotelSummary>
-      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId} updateBooking={updateBooking} /> : <></>}      
+      {selectedHotelId ? <Rooms key={selectedHotelId} hotelId={selectedHotelId}/> : <></>}      
     </>
   );
 }
