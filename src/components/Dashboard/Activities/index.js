@@ -4,10 +4,11 @@ import ChooseDay from './chooseDay';
 import ActivitiesComponent from './activitiesContainer';
 
 export default function Activities() {
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <ActivitiesArea>
-      <ChooseDay></ChooseDay>
-      <ActivitiesComponent></ActivitiesComponent>
+      <ChooseDay selectedDate={selectedDate} setSelectedDate={setSelectedDate}></ChooseDay>
+      <ActivitiesComponent selectedDate={selectedDate}></ActivitiesComponent>
     </ActivitiesArea>
   );
 }

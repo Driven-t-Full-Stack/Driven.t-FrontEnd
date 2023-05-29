@@ -2,32 +2,35 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import vacancy from '../../../assets/images/vacancy.png';
 
-export default function Activity() {
+export default function Activity(props) {
+  const info = props.info;
+
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const handleSelected = (activity) => {
+    setSelectedActivity(activity);
+  };
+
   return (
     <Local>
-      <Title><p>Auditório Principal</p></Title>
+      <Title><p>info[0].location</p></Title>
 
-      <ActivityDiv>
-        <ActivityText>
-          <p><span>Minecraft: montando o PC ideal</span>
-            09:00 - 10:00</p>
-        </ActivityText>
-        <VacancyDiv>
-          <img src={vacancy} alt="vacancy"/>
-          <p>27 vagas</p>
-        </VacancyDiv>
-      </ActivityDiv>
-
-      <ActivityDiv>
-        <ActivityText>
-          <p><span>Minecraft: montando o PC ideal</span>
-            09:00 - 10:00</p>
-        </ActivityText>
-        <VacancyDiv>
-          <img src={vacancy} alt="vacancy"/>
-          <p>27 vagas</p>
-        </VacancyDiv>
-      </ActivityDiv>
+      {info.map((activity, index) => (
+        <ActivityDiv 
+          key={index} 
+          activity={activity}
+          isSelected={setSelectedActivity === activity}
+          onClick={() => handleSelected(activity)}
+        >
+          <ActivityText>
+            <p><span>{activity.title}</span>
+              {activity.start} - {activity.end}</p>
+          </ActivityText>
+          <VacancyDiv>
+            <img src={vacancy} alt="vacancy"/>
+            <p>{activity.availableSlots}</p>
+          </VacancyDiv>
+        </ActivityDiv>          
+      ))}  
     </Local>
   );
 }

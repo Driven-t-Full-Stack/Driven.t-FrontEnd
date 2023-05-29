@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import Day from './day';
 import getActvitiesDates from '../../../hooks/api/getActivitiesDates';
 
-export default function ChooseDay() {
+export default function ChooseDay(props) {
   const { activitiesDates } = getActvitiesDates();
   const [activitiesData, setActivitiesData] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  //const [selectedDate, setSelectedDate] = useState(null);
+  const { selectedDate, setSelectedDate } = props;
 
   useEffect(() => {
     if (activitiesDates) {
