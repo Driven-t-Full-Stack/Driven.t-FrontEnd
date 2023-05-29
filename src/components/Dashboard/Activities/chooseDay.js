@@ -2,14 +2,12 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Day from './day';
 
-export default function ChooseDay() {
+export default function ChooseDay({ days }) {
   return (
     <>
       <SubTitle>Primeiro, filtre pelo dia do evento:</SubTitle>
       <Days>
-        <Day date="Sexta, 22/10"></Day>
-        <Day date="Sexta, 22/10"></Day>
-        <Day date="Sexta, 22/10"></Day>
+        {days.map((day) => (<Day date={day} />))}
       </Days>
     </>
   );
