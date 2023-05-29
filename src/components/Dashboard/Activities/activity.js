@@ -1,22 +1,34 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import vacancy from '../../../assets/images/vacancy.png';
+import getTime from '../../../hooks/api/getTime';
 
 export default function Activity(props) {
   const { activityData } = props;
-  const time = ['0', '09:00 - 10:00', '9:00 - 11:00', '9:00 - 12:00', '10:00 - 11:00', '10:00 - 12:00', '11:00 - 12:00'];
+  const { time } = getTime(activityData.timeId);
+  const [ timeRender, setTimeRender ] = useState(null);
 
-  return (
-    <ActivityDiv>
-      <ActivityText>
-        <p><span>{activityData.title}</span></p>
-        <p>{time[activityData.timeId]}</p>
-      </ActivityText>
-      <VacancyDiv>
-        <img src={vacancy} alt="vacancy"/>
-        <p>{activityData.availableSlots}</p>
-      </VacancyDiv>
-    </ActivityDiv>
-  );
+  useEffect(() => {
+    if(time) {
+      setTimeRender(time);
+    }
+  }, [time]);
+  if (timeRender !== null) {
+    return (
+      <ActivityDiv>
+        <ActivityText>
+          <p><span>{activityData.title}</span></p>
+          <p>{`${timeRender.start}:00 - ${timeRender.end}:00`}</p>
+        </ActivityText>
+        <VacancyDiv>
+          <img src={vacancy} alt="vacancy"/>
+          <p>{activityData.availableSlots}</p>
+        </VacancyDiv>
+      </ActivityDiv>
+    );
+  } else {
+    return <></>;
+  }
 }
 
 const ActivityDiv = styled.div`
