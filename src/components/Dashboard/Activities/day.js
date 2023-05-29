@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function Day(props) {
+  const { date, setSelectedDay, selectedDay } = props;
+
   return (
     <>
-      <DayContainer>
-        <p>{props.date}</p>
+      <DayContainer selected={selectedDay === date}>
+        <p>{date}</p>
       </DayContainer>
     </>
   );
@@ -14,7 +16,7 @@ export default function Day(props) {
 const DayContainer = styled.div`
 width: 131px;
 height: 37px;
-background-color: #E0E0E0;
+background-color: ${(props) => (props.selected ? '#FFD37D' : '#E0E0E0')};
 box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
 border-radius: 4px;
 display: flex;

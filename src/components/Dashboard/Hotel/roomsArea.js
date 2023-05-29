@@ -47,7 +47,7 @@ export default function Rooms(props) {
       await updateBookingById({ roomId: roomId, bookingId: bookingId });
       window.location.reload(true);
     } catch (error) {
-      console.error('Error saving booking:', error);
+      console.error('Error updating booking:', error);
     }
   };
 
