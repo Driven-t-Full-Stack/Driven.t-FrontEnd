@@ -28,6 +28,6 @@ color: #8E8E8E;
 display: flex;
 align-items: center;
 justify-content: center;
-margin: 10% 0px;
+margin: 17% 0% 20% 10%;
 width: 70%;
 `;

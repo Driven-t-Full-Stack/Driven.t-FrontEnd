@@ -16,7 +16,7 @@ export async function getBookingByRoomId(roomId, token) {
       Authorization: `Bearer ${token}`,
     },
   });
-
+  
   return response.data;
 }
 
