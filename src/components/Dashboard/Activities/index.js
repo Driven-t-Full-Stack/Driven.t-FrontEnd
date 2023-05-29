@@ -35,12 +35,10 @@ export default function Activities() {
     return days;
   };
 
-  console.log(selectedDay);
-
   return (
     <ActivitiesArea>
       <ChooseDay days={days} setSelectedDay={setSelectedDay} selectedDay={selectedDay} />
-      <ActivitiesComponent />
+      <ActivitiesComponent activitiesData={activitiesData} selectedDay={selectedDay} />
     </ActivitiesArea>
   );
 }
