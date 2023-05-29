@@ -3,12 +3,13 @@ import vacancy from '../../../assets/images/vacancy.png';
 
 export default function Activity(props) {
   const { activityData } = props;
+  const time = ['0', '09:00 - 10:00', '9:00 - 11:00', '9:00 - 12:00', '10:00 - 11:00', '10:00 - 12:00', '11:00 - 12:00'];
 
   return (
     <ActivityDiv>
       <ActivityText>
         <p><span>{activityData.title}</span></p>
-        <p>09:00 - 10:00</p>
+        <p>{time[activityData.timeId]}</p>
       </ActivityText>
       <VacancyDiv>
         <img src={vacancy} alt="vacancy"/>
