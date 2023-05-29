@@ -9,9 +9,10 @@ import Rooms from './roomsArea';
 export default function HotelsArea(props) {
   const [hotelsData, setHotelsData] = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
+  const [isBooked, setIsBooked] = useState(false);
   const { hotels, error } = getHotels();
   const { userBooking } = getUserBooking();
-  
+  console.log(userBooking);
   useEffect(() => {
     if (hotels) {
       setHotelsData(hotels);
@@ -19,15 +20,16 @@ export default function HotelsArea(props) {
   }, [selectedHotelId, hotels, userBooking]);
 
   function updateHotelId(id) {
-    setSelectedHotelId(id);    
+    setSelectedHotelId(id);
   }
-
-  if (userBooking) {
+  
+  if (userBooking && !isBooked) {
     return <ChangeRoom 
       roomName={userBooking.Room.name}
       hotelId={userBooking.Room.hotelId}
       roomId={userBooking.Room.id}
       roomCapacity={userBooking.Room.capacity}
+      setIsBooked={setIsBooked}
     />;
   }
 

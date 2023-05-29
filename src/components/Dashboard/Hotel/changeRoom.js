@@ -5,7 +5,7 @@ import getBookings from '../../../hooks/api/getBookingByRoomId';
 import { useState, useEffect } from 'react';
 
 export default function ChangeRoom(props) {
-  const { roomName, hotelId, roomId, roomCapacity } = props;
+  const { roomName, hotelId, roomId, roomCapacity, setIsBooked } = props;
   const { Hotel } = getRooms(hotelId);
   const { bookings } = getBookings(roomId);
   const [ hotelName, setHotelName ] = useState(undefined);
@@ -64,7 +64,7 @@ export default function ChangeRoom(props) {
             <HotelProperties>{ocuppants}</HotelProperties>
           </Description>
         </Summary>
-        <Accommodation>TROCAR DE QUARTO</Accommodation>
+        <Accommodation onClick={() => {setIsBooked(true);}} >TROCAR DE QUARTO</Accommodation>
       </HotelSummary>
       
     </>

@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { RoomComponent } from './room';
 import getRooms from '../../../hooks/api/getRooms';
 import useSaveBooking from '../../../hooks/api/useSaveBooking';
+import getUserBooking from '../../../hooks/api/getUserBooking';
+import useUpdateBooking from '../../../hooks/api/useUpdateBooking';
 
 export default function Rooms(props) {  
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { Hotel } = getRooms(props.hotelId);
   const [roomId, setRoomId] = useState(null);
+  const { userBooking } = getUserBooking();
 
   useEffect(() => {
     if (Hotel) {
@@ -17,15 +20,34 @@ export default function Rooms(props) {
     }
   }, [Hotel]);
 
+  function handleBookingStatus({ roomId }) {
+    if(!userBooking) {
+      return handleSaveBooking({ roomId: roomId });
+    } else {
+      return handleUpdateBooking({ roomId: roomId, bookingId: userBooking.id });
+    }
+  }
+
   const { saveBooking } = useSaveBooking();
 
-  const handleSaveBooking = async() => {
+  const handleSaveBooking = async({ roomId, bookingId }) => {
     try {
-      await saveBooking({ roomId: roomId });
+      await saveBooking({ roomId: roomId, bookingId: bookingId });
       window.location.reload(true);
     } catch (error) {
       // Handle the error here (e.g., display an error message)      
       console.error('Error saving booking:', error);
+    }
+  };
+
+  const { updateBookingById } = useUpdateBooking();
+
+  const handleUpdateBooking = async({ roomId, bookingId }) => {
+    try {
+      await updateBookingById({ roomId: roomId, bookingId: bookingId });
+      window.location.reload(true);
+    } catch (error) {
+      console.error('Error updating booking:', error);
     }
   };
 
@@ -52,7 +74,7 @@ export default function Rooms(props) {
     <>
       {isLoading ? <div>Loading...</div> : roomsContent}
       <Accommodation>
-        <div onClick={() => handleSaveBooking({ roomId: roomId })}>
+        <div onClick={() => handleBookingStatus({ roomId: roomId })}>
           <p>RESERVAR QUARTO</p>
         </div>
       </Accommodation>
