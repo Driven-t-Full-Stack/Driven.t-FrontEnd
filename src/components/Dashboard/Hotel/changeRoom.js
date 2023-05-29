@@ -1,20 +1,52 @@
 import styled from 'styled-components';
 import resort from '../../../assets/images/resort.png';
 import getRooms from '../../../hooks/api/getRooms';
+import getBookings from '../../../hooks/api/getBookingByRoomId';
 import { useState, useEffect } from 'react';
 
 export default function ChangeRoom(props) {
-  const { roomName, hotelId, setIsBooked } = props;
+  const { roomName, hotelId, roomId, roomCapacity, setIsBooked } = props;
   const { Hotel } = getRooms(hotelId);
+  const { bookings } = getBookings(roomId);
   const [ hotelName, setHotelName ] = useState(undefined);
   const [ hotelImg, setHotelImg ] = useState(undefined);
+  const [ roomType, setRoomType ] = useState(null);
+  const [roomBookings, setRoomBookings] = useState([]);
+  const [ ocuppants, setOcuppants ] = useState(null);
 
   useEffect(() => {
     if (Hotel) {
       setHotelName(Hotel.name);
       setHotelImg(Hotel.image);
-    }        
-  }, [Hotel]);  
+      acomodationType(roomCapacity);      
+    }
+    if (bookings) {
+      setRoomBookings(bookings);
+      roomOcuppacy(roomBookings.length);
+    }
+    console.log(ocuppants);
+  }, [Hotel, roomType, bookings, ocuppants]);
+  
+  function acomodationType(roomCapacity) {
+    if (roomCapacity == 1) {
+      setRoomType('Single');
+    } else if (roomCapacity == 2) {
+      setRoomType('Double');
+    } else if (roomCapacity == 3) {
+      setRoomType('Triple');
+    } else {
+      setRoomType('Suite');
+    }   
+  };
+
+  function roomOcuppacy(ocuppacy) {
+    const numberOfPeople = ocuppacy - 1;
+    if (ocuppacy == 1) {
+      setOcuppants('Somente você!');
+    } else{
+      setOcuppants('Você e mais ' + numberOfPeople);
+    }
+  };
 
   return (
     <>
@@ -27,12 +59,12 @@ export default function ChangeRoom(props) {
           </HotelName>
           <Description>
             <p>Quarto reservado</p>
-            <HotelProperties>{roomName}</HotelProperties>
+            <HotelProperties>{roomName} ({roomType})</HotelProperties>
             <p>Pessoas no seu quarto</p>
-            <HotelProperties>Você e mais 1</HotelProperties>
+            <HotelProperties>{ocuppants}</HotelProperties>
           </Description>
         </Summary>
-        <Accommodation onClick={() => {setIsBooked(false);}}>TROCAR DE QUARTO</Accommodation>
+        <Accommodation onClick={() => {setIsBooked(true);}} >TROCAR DE QUARTO</Accommodation>
       </HotelSummary>
       
     </>

@@ -25,7 +25,7 @@ export const RoomComponent = ({ room, selected, onClick }) => {
       selected={selected}
       onClick={onClick}
     >
-      <p>{room.id}</p>
+      <p>{room.name}</p>
       <div>
         {roomBookings.map((booking, index) => (
           <img
@@ -65,6 +65,7 @@ const Room = styled.div`
   div {
     display: flex;
     justify-content: flex-end;
+    
   }
 
   p {
